@@ -51,3 +51,5 @@ group :test, :development do
   gem 'factory_girl_rails'
   gem 'ruby-prof'
 end
+gem "devise"
+gem "devise-guests", "~> 0.3"

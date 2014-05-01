@@ -8,7 +8,8 @@ class CatalogController < ApplicationController
     ## Default parameters to send to solr for all search-like requests. See also SolrHelper#solr_search_params
     config.default_solr_params = { 
       :qt => 'search',
-      :rows => 10 
+      :rows => 10,
+      :fl => '*'
     }
     
     # solr path which will be added to solr base url before the other solr params.
@@ -31,7 +32,7 @@ class CatalogController < ApplicationController
     # solr field configuration for search results/index views
     config.index.title_field = 'title_display'
     config.index.display_type_field = 'format'
-
+    config.index.thumbnail_field = :object_s
     # solr field configuration for document/show views
     #config.show.title_field = 'title_display'
     #config.show.display_type_field = 'format'
@@ -55,6 +56,7 @@ class CatalogController < ApplicationController
     #
     # :show may be set to false if you don't want the facet to be drawn in the 
     # facet bar
+    config.add_facet_field 'provider_name_s', :label => 'Provider'
     config.add_facet_field 'format', :label => 'Format'
     config.add_facet_field 'pub_date', :label => 'Publication Year', :single => true
     config.add_facet_field 'subject_topic_facet', :label => 'Topic', :limit => 20 
@@ -88,6 +90,41 @@ class CatalogController < ApplicationController
     config.add_index_field 'published_display', :label => 'Published'
     config.add_index_field 'published_vern_display', :label => 'Published'
     config.add_index_field 'lc_callnum_display', :label => 'Call number'
+
+
+    dpla_fields = [
+        %w[subject_topic_facet Subject],
+        %w[dataProvider_s Provider],
+        %w[isShownAt_s isShownat],
+        %w[provider_id_s Provider ID],
+        %w[sourceResource_collection_title_s Collection],
+        %w[sourceResource_collection_description_txt Collection\ Description],
+        %w[sourceResource_collection_id_s Collection\ ID],
+        %w[sourceResource_contributor_s Contributor],
+        %w[sourceResource_creator_s Creator],
+        %w[sourceResource_date_begin_s Date\ Begin],
+        %w[sourceResource_date_end_s Date\ End],
+        %w[sourceResource_date_displaydate_s Display\ Date],
+        %w[sourceResource_description_txt Description],
+        %w[sourceResource_extent_s Extent],
+        %w[sourceResource_identifier_s Identifier],
+        %w[sourceResource_language_name_s Language],
+        %w[sourceResource_language_iso639_s Langiso639],
+        %w[sourceResource_physicalMedium_s Physical\ Medium],
+        %w[sourceResource_publisher_s Publisher],
+        %w[sourceResource_rights_s Rights],
+        %w[sourceResource_spatial_coordinates_p Coordinates],
+        %w[sourceResource_spatial_city_s City],
+        %w[sourceResource_spatial_state_s State],
+        %w[sourceResource_spatial_county_s County],
+        %w[sourceResource_spatial_name_s Spatial\ Name],
+        %w[sourceResource_spatial_region_s Region],
+        %w[subject_geo_facet Subject],
+        %w[sourceResource_type_s Type]
+    ]
+    dpla_fields.each do |dpla_field|
+        config.add_index_field dpla_field[0], :label => dpla_field[1]
+    end
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display 
@@ -165,12 +202,20 @@ class CatalogController < ApplicationController
       }
     end
 
+
+    # config.add_search_field('id') do |field|
+    #   field.solr_local_parameters = { 
+    #     :qf => '$id_qf',
+    #     :pf => '$id_pf'
+    #   }
+    # end
+
     # "sort results by" select (pulldown)
     # label in pulldown is followed by the name of the SOLR field to sort by and
     # whether the sort is ascending or descending (it must be asc or desc
     # except in the relevancy case).
     config.add_sort_field 'score desc, pub_date_sort desc, title_sort asc', :label => 'relevance'
-    config.add_sort_field 'pub_date_sort desc, title_sort asc', :label => 'year'
+    # config.add_sort_field 'pub_date_sort desc, title_sort asc', :label => 'year'
     config.add_sort_field 'author_sort asc, title_sort asc', :label => 'author'
     config.add_sort_field 'title_sort asc, pub_date_sort desc', :label => 'title'
 

@@ -5,6 +5,38 @@ class CatalogController < ApplicationController
   include Blacklight::Catalog
 
   configure_blacklight do |config|
+
+    dpla_fields = [
+        %w[subject_topic_facet Subject],
+        %w[dataProvider_s Provider],
+        %w[isShownAt_s isShownat],
+        %w[provider_id_s Provider ID],
+        %w[sourceResource_collection_title_s Collection],
+        %w[sourceResource_collection_description_txt Collection\ Description],
+        %w[sourceResource_collection_id_s Collection\ ID],
+        %w[sourceResource_contributor_s Contributor],
+        %w[sourceResource_creator_s Creator],
+        %w[sourceResource_date_begin_s Date\ Begin],
+        %w[sourceResource_date_end_s Date\ End],
+        %w[sourceResource_date_displaydate_s Display\ Date],
+        %w[sourceResource_description_txt Description],
+        %w[sourceResource_extent_s Extent],
+        %w[sourceResource_identifier_s Identifier],
+        %w[sourceResource_language_name_s Language],
+        %w[sourceResource_language_iso639_s Langiso639],
+        %w[sourceResource_physicalMedium_s Physical\ Medium],
+        %w[sourceResource_publisher_s Publisher],
+        %w[sourceResource_rights_s Rights],
+        %w[sourceResource_spatial_city_s City],
+        %w[sourceResource_spatial_state_s State],
+        %w[sourceResource_spatial_county_s County],
+        %w[sourceResource_spatial_name_s Spatial\ Name],
+        %w[sourceResource_spatial_region_s Region],
+        %w[subject_geo_facet Subject],
+        %w[sourceResource_type_s Type],
+        %w[originalRecord_txt Original\ Record]
+    ]
+
     ## Default parameters to send to solr for all search-like requests. See also SolrHelper#solr_search_params
     config.default_solr_params = { 
       :qt => 'search',
@@ -56,22 +88,19 @@ class CatalogController < ApplicationController
     #
     # :show may be set to false if you don't want the facet to be drawn in the 
     # facet bar
+    config.add_facet_field 'sourceResource_spatial_coordinates_s', :label => 'Coordinates'
+
     config.add_facet_field 'provider_name_s', :label => 'Provider'
     config.add_facet_field 'format', :label => 'Format'
     config.add_facet_field 'pub_date', :label => 'Publication Year', :single => true
-    config.add_facet_field 'subject_topic_facet', :label => 'Topic', :limit => 20 
+    # config.add_facet_field 'subject_topic_facet', :label => 'Topic', :limit => 20 
     config.add_facet_field 'language_facet', :label => 'Language', :limit => true 
-    config.add_facet_field 'lc_1letter_facet', :label => 'Call Number' 
-    config.add_facet_field 'subject_geo_facet', :label => 'Region' 
+    #config.add_facet_field 'subject_geo_facet', :label => 'Region' 
     config.add_facet_field 'subject_era_facet', :label => 'Era'  
 
-    config.add_facet_field 'example_pivot_field', :label => 'Pivot Field', :pivot => ['format', 'language_facet']
-
-    config.add_facet_field 'example_query_facet_field', :label => 'Publish Date', :query => {
-       :years_5 => { :label => 'within 5 Years', :fq => "pub_date:[#{Time.now.year - 5 } TO *]" },
-       :years_10 => { :label => 'within 10 Years', :fq => "pub_date:[#{Time.now.year - 10 } TO *]" },
-       :years_25 => { :label => 'within 25 Years', :fq => "pub_date:[#{Time.now.year - 25 } TO *]" }
-    }
+    dpla_fields.each do |dpla_field|
+        config.add_facet_field dpla_field[0], :label => dpla_field[1], :limit => 20
+    end
 
 
     # Have BL send all facet field names to Solr, which has been the default
@@ -81,6 +110,7 @@ class CatalogController < ApplicationController
 
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display 
+    config.add_index_field 'id', :label => 'Hub ID'
     config.add_index_field 'title_display', :label => 'Title'
     config.add_index_field 'title_vern_display', :label => 'Title'
     config.add_index_field 'author_display', :label => 'Author'
@@ -89,39 +119,10 @@ class CatalogController < ApplicationController
     config.add_index_field 'language_facet', :label => 'Language'
     config.add_index_field 'published_display', :label => 'Published'
     config.add_index_field 'published_vern_display', :label => 'Published'
-    config.add_index_field 'lc_callnum_display', :label => 'Call number'
+    config.add_index_field 'sourceResource_spatial_coordinates_p', :label => 'Coordinates'
 
 
-    dpla_fields = [
-        %w[subject_topic_facet Subject],
-        %w[dataProvider_s Provider],
-        %w[isShownAt_s isShownat],
-        %w[provider_id_s Provider ID],
-        %w[sourceResource_collection_title_s Collection],
-        %w[sourceResource_collection_description_txt Collection\ Description],
-        %w[sourceResource_collection_id_s Collection\ ID],
-        %w[sourceResource_contributor_s Contributor],
-        %w[sourceResource_creator_s Creator],
-        %w[sourceResource_date_begin_s Date\ Begin],
-        %w[sourceResource_date_end_s Date\ End],
-        %w[sourceResource_date_displaydate_s Display\ Date],
-        %w[sourceResource_description_txt Description],
-        %w[sourceResource_extent_s Extent],
-        %w[sourceResource_identifier_s Identifier],
-        %w[sourceResource_language_name_s Language],
-        %w[sourceResource_language_iso639_s Langiso639],
-        %w[sourceResource_physicalMedium_s Physical\ Medium],
-        %w[sourceResource_publisher_s Publisher],
-        %w[sourceResource_rights_s Rights],
-        %w[sourceResource_spatial_coordinates_p Coordinates],
-        %w[sourceResource_spatial_city_s City],
-        %w[sourceResource_spatial_state_s State],
-        %w[sourceResource_spatial_county_s County],
-        %w[sourceResource_spatial_name_s Spatial\ Name],
-        %w[sourceResource_spatial_region_s Region],
-        %w[subject_geo_facet Subject],
-        %w[sourceResource_type_s Type]
-    ]
+
     dpla_fields.each do |dpla_field|
         config.add_index_field dpla_field[0], :label => dpla_field[1]
     end

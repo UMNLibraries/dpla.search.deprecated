@@ -34,7 +34,7 @@ module BlacklightHelper
   def custom_field(field, document)
     case field
     when 'id'
-      return link_to("#{document.id} (View in DPLA Hub)", "http://dpla.hub/records/"+ document.id)
+      return link_to("#{document.id} (View in DPLA Hub)", "http://hub-client.lib.umn.edu/records/"+ document.id)
     end
     false
   end

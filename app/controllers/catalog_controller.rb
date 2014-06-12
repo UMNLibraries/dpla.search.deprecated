@@ -27,11 +27,12 @@ class CatalogController < ApplicationController
         %w[sourceResource_physicalMedium_s Physical\ Medium],
         %w[sourceResource_publisher_sm Publisher],
         %w[sourceResource_rights_s Rights],
+        %w[sourceResource_spatial_name_s Spatial\ Name],
         %w[sourceResource_spatial_city_s City],
         %w[sourceResource_spatial_state_s State],
         %w[sourceResource_spatial_county_s County],
-        %w[sourceResource_spatial_name_s Spatial\ Name],
         %w[sourceResource_spatial_region_s Region],
+        %w[sourceResource_spatial_coordinates_s Coordinates],
         %w[subject_geo_facet Subject],
         %w[sourceResource_type_s Type],
         %w[originalRecord_txt Original\ Record]
@@ -88,8 +89,6 @@ class CatalogController < ApplicationController
     #
     # :show may be set to false if you don't want the facet to be drawn in the 
     # facet bar
-    config.add_facet_field 'sourceResource_spatial_coordinates_s', :label => 'Coordinates'
-
     config.add_facet_field 'provider_name_s', :label => 'Provider'
     config.add_facet_field 'format', :label => 'Format'
     config.add_facet_field 'pub_date', :label => 'Publication Year', :single => true

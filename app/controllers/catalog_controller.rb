@@ -118,9 +118,6 @@ class CatalogController < ApplicationController
     config.add_index_field 'language_facet', :label => 'Language'
     config.add_index_field 'published_display', :label => 'Published'
     config.add_index_field 'published_vern_display', :label => 'Published'
-    config.add_index_field 'sourceResource_spatial_coordinates_p', :label => 'Coordinates'
-
-
 
     dpla_fields.each do |dpla_field|
         config.add_index_field dpla_field[0], :label => dpla_field[1]

@@ -7,6 +7,7 @@ class CatalogController < ApplicationController
   configure_blacklight do |config|
 
     dpla_fields = [
+        %w[status_s Deleted\ Status],
         %w[subject_topic_facet Subject],
         %w[dataProvider_s Provider],
         %w[isShownAt_s isShownat],

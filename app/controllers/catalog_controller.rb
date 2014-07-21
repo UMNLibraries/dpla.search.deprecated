@@ -98,7 +98,14 @@ class CatalogController < ApplicationController
     #config.add_facet_field 'subject_geo_facet', :label => 'Region' 
     config.add_facet_field 'subject_era_facet', :label => 'Era'  
 
-    dpla_fields.each do |dpla_field|
+    non_facets = [
+        'isShownAt_s',
+        'sourceResource_collection_description_txt',
+        'sourceResource_description_txt',
+        'originalRecord_txt'
+        ]
+    dpla_facet_fields = (dpla_fields.map {|field| (!non_facets.include? field.first) ? field : nil}).compact
+    dpla_facet_fields.each do |dpla_field|
         config.add_facet_field dpla_field[0], :label => dpla_field[1], :limit => 20
     end
 

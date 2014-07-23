@@ -12,6 +12,7 @@ class CatalogController < ApplicationController
         %w[dataProvider_s Provider],
         %w[isShownAt_s isShownat],
         %w[provider_id_s Provider ID],
+        %w[dataProvider_sm Data\ Provider],
         %w[sourceResource_collection_title_s Collection],
         %w[sourceResource_collection_description_txt Collection\ Description],
         %w[sourceResource_collection_id_s Collection\ ID],

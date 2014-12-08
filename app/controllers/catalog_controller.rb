@@ -9,15 +9,15 @@ class CatalogController < ApplicationController
     dpla_fields = [
         %w[status_s Deleted\ Status],
         %w[subject_topic_facet Subject],
-        %w[dataProvider_s Provider],
+        %w[provider_name_s Provider],
         %w[isShownAt_s isShownat],
         %w[provider_id_s Provider ID],
-        %w[dataProvider_sm Data\ Provider],
+        %w[dataProvider_s Data\ Provider],
         %w[sourceResource_collection_title_s Collection],
         %w[sourceResource_collection_description_txt Collection\ Description],
         %w[sourceResource_collection_id_s Collection\ ID],
         %w[sourceResource_contributor_s Contributor],
-        %w[sourceResource_creator_sm Creator],
+        %w[creator_display Creator],
         %w[sourceResource_date_begin_s Date\ Begin],
         %w[sourceResource_date_end_s Date\ End],
         %w[sourceResource_date_displaydate_s Display\ Date],
@@ -27,7 +27,7 @@ class CatalogController < ApplicationController
         %w[sourceResource_language_name_s Language],
         %w[sourceResource_language_iso639_s Langiso639],
         %w[sourceResource_physicalMedium_s Physical\ Medium],
-        %w[sourceResource_publisher_sm Publisher],
+        %w[sourceResource_publisher_s Publisher],
         %w[sourceResource_rights_s Rights],
         %w[sourceResource_spatial_name_s Spatial\ Name],
         %w[sourceResource_spatial_city_s City],
@@ -90,8 +90,7 @@ class CatalogController < ApplicationController
     # app code to actually have it echo'd back to see it.  
     #
     # :show may be set to false if you don't want the facet to be drawn in the 
-    # facet bar
-    config.add_facet_field 'provider_name_s', :label => 'Provider'
+    # facet bar`
     config.add_facet_field 'format', :label => 'Format'
     config.add_facet_field 'pub_date', :label => 'Publication Year', :single => true
     # config.add_facet_field 'subject_topic_facet', :label => 'Topic', :limit => 20 

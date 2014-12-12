@@ -118,12 +118,8 @@ class CatalogController < ApplicationController
     #   The ordering of the field names is the order of the display 
     config.add_index_field 'id', :label => 'Hub ID'
     config.add_index_field 'title_display', :label => 'Title'
-    config.add_index_field 'title_vern_display', :label => 'Title'
-    config.add_index_field 'author_display', :label => 'Author'
-    config.add_index_field 'author_vern_display', :label => 'Author'
+    config.add_index_field 'creator_t', :label => 'Creator'
     config.add_index_field 'language_facet', :label => 'Language'
-    config.add_index_field 'published_display', :label => 'Published'
-    config.add_index_field 'published_vern_display', :label => 'Published'
 
     dpla_fields.each do |dpla_field|
         config.add_index_field dpla_field[0], :label => dpla_field[1]
@@ -132,18 +128,8 @@ class CatalogController < ApplicationController
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display 
     config.add_show_field 'title_display', :label => 'Title'
-    config.add_show_field 'title_vern_display', :label => 'Title'
-    config.add_show_field 'subtitle_display', :label => 'Subtitle'
-    config.add_show_field 'subtitle_vern_display', :label => 'Subtitle'
-    config.add_show_field 'author_display', :label => 'Author'
-    config.add_show_field 'author_vern_display', :label => 'Author'
-    config.add_show_field 'url_fulltext_display', :label => 'URL'
-    config.add_show_field 'url_suppl_display', :label => 'More Information'
+    config.add_show_field 'creator_t', :label => 'Creator'
     config.add_show_field 'language_facet', :label => 'Language'
-    config.add_show_field 'published_display', :label => 'Published'
-    config.add_show_field 'published_vern_display', :label => 'Published'
-    config.add_show_field 'lc_callnum_display', :label => 'Call number'
-    config.add_show_field 'isbn_t', :label => 'ISBN'
 
     dpla_fields.each do |dpla_field|
         config.add_show_field dpla_field[0], :label => dpla_field[1]

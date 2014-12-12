@@ -7,7 +7,8 @@ class CatalogController < ApplicationController
   configure_blacklight do |config|
 
     dpla_fields = [
-        %w[sourceResource_format_s Format]
+        %w[sourceResource_type_s Type],
+        %w[sourceResource_format_s Format],
         %w[batch_id_s Index\ Batch\ ID],
         %w[status_s Deleted\ Status],
         %w[subject_topic_facet Subject],
@@ -38,7 +39,6 @@ class CatalogController < ApplicationController
         %w[sourceResource_spatial_region_s Region],
         %w[sourceResource_spatial_coordinates_s Coordinates],
         %w[subject_geo_facet Subject],
-        %w[sourceResource_type_s Type],
         %w[originalRecord_txt Original\ Record]
     ]
 

@@ -38,8 +38,7 @@ class CatalogController < ApplicationController
         %w[sourceResource_spatial_county_s County],
         %w[sourceResource_spatial_region_s Region],
         %w[sourceResource_spatial_coordinates_s Coordinates],
-        %w[subject_geo_facet Subject],
-        %w[originalRecord_txt Original\ Record]
+        %w[subject_geo_facet Subject]
     ]
 
     ## Default parameters to send to solr for all search-like requests. See also SolrHelper#solr_search_params
@@ -102,8 +101,7 @@ class CatalogController < ApplicationController
     non_facets = [
         'isShownAt_s',
         'sourceResource_collection_description_txt',
-        'sourceResource_description_txt',
-        'originalRecord_txt'
+        'sourceResource_description_txt'
         ]
     dpla_facet_fields = (dpla_fields.map {|field| (!non_facets.include? field.first) ? field : nil}).compact
     dpla_facet_fields.each do |dpla_field|

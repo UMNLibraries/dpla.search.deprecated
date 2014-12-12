@@ -7,6 +7,7 @@ class CatalogController < ApplicationController
   configure_blacklight do |config|
 
     dpla_fields = [
+        %w[batch_id_s Index\ Batch\ Name],
         %w[status_s Deleted\ Status],
         %w[subject_topic_facet Subject],
         %w[provider_name_s Provider],

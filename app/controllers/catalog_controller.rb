@@ -17,7 +17,7 @@ class CatalogController < ApplicationController
         %w[sourceResource_collection_description_txt Collection\ Description],
         %w[sourceResource_collection_id_s Collection\ ID],
         %w[sourceResource_contributor_s Contributor],
-        %w[creator_t Creator],
+        %w[creator_facet Creator],
         %w[sourceResource_date_begin_s Date\ Begin],
         %w[sourceResource_date_end_s Date\ End],
         %w[sourceResource_date_displaydate_s Display\ Date],

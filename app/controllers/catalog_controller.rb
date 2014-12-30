@@ -8,6 +8,7 @@ class CatalogController < ApplicationController
 
     dpla_fields = [
         %w[sourceResource_type_s Type],
+        %w[lcsh_subject_t LCSH Subject (experimental)],
         %w[sourceResource_format_s Format],
         %w[batch_id_s Index\ Batch\ ID],
         %w[status_s Deleted\ Status],
